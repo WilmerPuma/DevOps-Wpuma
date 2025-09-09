@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "8080:80"
+  backend-api:
+    build: ./backend-api
+    ports:
+      - "9000:9000"
+  ms-notificaciones:
+    build: ./ms-notificaciones
+    ports:
+      - "3000:3000"
+  mariadb:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql

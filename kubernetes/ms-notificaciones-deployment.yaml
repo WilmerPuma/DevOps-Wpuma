@@ -1,0 +1,20 @@
+# Despliegue de ms-notificaciones
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-notificaciones-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-notificaciones
+  template:
+    metadata:
+      labels:
+        app: ms-notificaciones
+    spec:
+      containers:
+      - name: ms-notificaciones
+        image: ms-notificaciones:latest
+        ports:
+        - containerPort: 3000
