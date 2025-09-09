@@ -1,22 +1,56 @@
 version: '3.8'
 services:
-  frontend:
-    build: ./frontend
-    ports:
-      - "8080:80"
-  backend-api:
-    build: ./backend-api
-    ports:
-      - "9000:9000"
-  ms-notificaciones:
-    build: ./ms-notificaciones
-    ports:
-      - "3000:3000"
   mariadb:
     image: mariadb:latest
+    container_name: mariadb
     environment:
       MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: appdb
+      MYSQL_USER: devuser
+      MYSQL_PASSWORD: devpass
     ports:
       - "3306:3306"
     volumes:
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+
+  backend-api:
+    build: ./backend-api
+    container_name: backend-api
+    environment:
+      DB_HOST: mariadb
+      DB_DATABASE: appdb
+      DB_USERNAME: devuser
+      DB_PASSWORD: devpass
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./backend-api/src:/var/www/html
+    depends_on:
+      - mariadb
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "8080:80"
+    volumes:
+      - ./frontend/src:/usr/share/nginx/html
+    restart: unless-stopped
+
+  ms-notificaciones:
+    build: ./ms-notificaciones
+    container_name: ms-notificaciones
+    environment:
+      DB_HOST: mariadb
+      DB_DATABASE: appdb
+      DB_USERNAME: devuser
+      DB_PASSWORD: devpass
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./ms-notificaciones/src:/app/src
+    depends_on:
+      - mariadb
+    restart: unless-stopped
