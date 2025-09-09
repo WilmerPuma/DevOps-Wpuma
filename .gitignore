@@ -1,0 +1,43 @@
+# Laravel
+/vendor/
+/node_modules/
+/.env
+/.env.*
+/storage/*.key
+/storage/logs/
+/storage/framework/
+/public/storage
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+
+# Node.js
+ms-notificaciones/node_modules/
+ms-notificaciones/.env
+ms-notificaciones/npm-debug.log
+ms-notificaciones/yarn-error.log
+
+# Docker
+*.log
+*.pid
+*.seed
+*.bak
+*.tmp
+Dockerfile*
+.dockerignore
+
+# IDEs y sistema
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Otros
+frontend/node_modules/
+frontend/.env
+frontend/npm-debug.log
+frontend/yarn-error.log
